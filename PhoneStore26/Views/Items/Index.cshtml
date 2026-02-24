@@ -1,0 +1,24 @@
+﻿@model Phone[]
+
+@for (int i = 0; i < Model.Length; ++i)
+{
+    <p>
+        We sell <b>@Model[i].Manufacturer</b> <b>@Model[i].Series</b> for $<b>@Model[i].Price</b> becouse this's <b>@Model[i].Description</b>
+    </p>
+
+    string Manufacturer = @Model[i].Manufacturer;
+    string Series = @Model[i].Series;
+    double Price = @Model[i].Price;
+    string Description = @Model[i].Description;
+
+    <form asp-action="Buy">
+        <input type="hidden" class="form-control" asp-for="@Manufacturer">
+        <input type="hidden" class="form-control" asp-for="@Series">
+        <input type="hidden" class="form-control" asp-for="@Description">
+        <div class="mb-3">
+            <label class="form-label">Пропозиція нової ціни від потенційного покупця</label>
+            <input type="text" class="form-control" asp-for="@Price">
+        </div>
+        <button type="submit" class="btn btn-primary">Купити</button>
+    </form>
+}
