@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PhoneStore26.Data;
 
@@ -11,9 +12,11 @@ using PhoneStore26.Data;
 namespace PhoneStore26.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260303083950_Add3tables")]
+    partial class Add3tables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -239,18 +242,6 @@ namespace PhoneStore26.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Title = "Smartphone"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Title = "Buttonphone"
-                        });
                 });
 
             modelBuilder.Entity("PhoneStore26.Models.Manufacturer", b =>
@@ -268,18 +259,6 @@ namespace PhoneStore26.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Manufacturer");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Title = "iPhone"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Title = "Samsung"
-                        });
                 });
 
             modelBuilder.Entity("PhoneStore26.Models.Phone", b =>
@@ -314,35 +293,6 @@ namespace PhoneStore26.Data.Migrations
                     b.HasIndex("ManufacturerId");
 
                     b.ToTable("Phones");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CategoryId = 1,
-                            Description = "low cost phone",
-                            ManufacturerId = 2,
-                            Price = 155.0,
-                            Series = "A25"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CategoryId = 1,
-                            Description = "cool phone",
-                            ManufacturerId = 2,
-                            Price = 255.0,
-                            Series = "A35"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CategoryId = 1,
-                            Description = "best phone",
-                            ManufacturerId = 1,
-                            Price = 300.0,
-                            Series = "15"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
