@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using PhoneStore26.Data;
 using PhoneStore26.Models;
 
@@ -8,84 +6,67 @@ namespace PhoneStore26.Controllers
 {
     public class ItemsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private ApplicationDbContext _context;
 
         public ItemsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // Завдання 5 (Read) та Завдання 6 (Фільтрація)
-        public IActionResult Index(int? categoryId, string searchString)
+        // READ + дуже проста фільтрація
+        public IActionResult Index(string search)
         {
-            // Передаємо дані для випадаючого списку категорій (для фільтра)
-            ViewBag.CategoryId = new SelectList(_context.Categories, "Id", "Title", categoryId);
-            ViewData["CurrentFilter"] = searchString;
+            var phones = _context.Phones.ToList();
+            _context.Categories.ToList();
+            _context.Manufacturer.ToList();
 
-            // Завантажуємо телефони разом з пов'язаними таблицями
-            var phones = _context.Phones
-                .Include(p => p.Manufacturer)
-                .Include(p => p.Category)
-                .AsQueryable();
-
-            // Логіка фільтрації
-            if (categoryId.HasValue)
+            if (!string.IsNullOrEmpty(search))
             {
-                phones = phones.Where(p => p.CategoryId == categoryId.Value);
+                phones = phones.Where(p => p.Series.Contains(search)).ToList();
             }
 
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                phones = phones.Where(p => p.Series.Contains(searchString) ||
-                                           p.Manufacturer.Title.Contains(searchString));
-            }
-
-            return View(phones.ToList());
+            return View(phones);
         }
 
-        // Завдання 5 (Create) - GET
+        // CREATE - відображення форми
         public IActionResult Create()
         {
-            ViewBag.ManufacturerId = new SelectList(_context.Manufacturer, "Id", "Title");
-            ViewBag.CategoryId = new SelectList(_context.Categories, "Id", "Title");
             return View();
         }
 
-        // Завдання 5 (Create) - POST
+        // CREATE - збереження в БД
         [HttpPost]
         public IActionResult Create(Phone phone)
         {
-            _context.Add(phone);
+            _context.Phones.Add(phone);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        // Завдання 5 (Update) - GET
-        public IActionResult Edit(int? id)
+        // UPDATE - відображення форми з даними
+        public IActionResult Edit(int id)
         {
             var phone = _context.Phones.Find(id);
-            ViewBag.ManufacturerId = new SelectList(_context.Manufacturer, "Id", "Title", phone.ManufacturerId);
-            ViewBag.CategoryId = new SelectList(_context.Categories, "Id", "Title", phone.CategoryId);
             return View(phone);
         }
 
-        // Завдання 5 (Update) - POST
+        // UPDATE - збереження змін
         [HttpPost]
-        public IActionResult Edit(int id, Phone phone)
+        public IActionResult Edit(Phone phone)
         {
-            _context.Update(phone);
+            _context.Phones.Update(phone);
             _context.SaveChanges();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index");
         }
 
-        // Завдання 5 (Delete) - GET
-        public IActionResult Delete(int? id)
+        // DELETE - відображення сторінки підтвердження
+        public IActionResult Delete(int id)
         {
             var phone = _context.Phones.Find(id);
             return View(phone);
         }
 
-        // Завдання 5 (Delete) - POST
+        // DELETE - фізичне видалення
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int id)
         {
