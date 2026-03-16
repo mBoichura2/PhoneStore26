@@ -1,0 +1,35 @@
+﻿@model PhoneStore26.Models.Phone
+
+@{
+    ViewData["Title"] = "Видалення";
+}
+
+<h1 class="text-danger">Видалити телефон</h1>
+
+<h3>Ви впевнені, що хочете видалити цей товар?</h3>
+<div>
+    <h4>Деталі телефону</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">Виробник</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Manufacturer.Title)</dd>
+
+        <dt class="col-sm-3">Категорія</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Category.Title)</dd>
+
+        <dt class="col-sm-3">Серія</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Series)</dd>
+
+        <dt class="col-sm-3">Ціна</dt>
+        <dd class="col-sm-9">$@Html.DisplayFor(model => model.Price)</dd>
+
+        <dt class="col-sm-3">Опис</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Description)</dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Видалити назавжди" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-secondary ms-2">Скасувати</a>
+    </form>
+</div>
