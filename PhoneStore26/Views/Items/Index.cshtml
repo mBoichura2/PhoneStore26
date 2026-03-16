@@ -1,30 +1,61 @@
-﻿@model Phone[]
+﻿@model IEnumerable<PhoneStore26.Models.Phone>
+
+@{
+    ViewData["Title"] = "Товари";
+}
+
+<h1>Товари</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Додати новий телефон</a>
+</p>
+
+<form asp-action="Index" method="get" class="mb-4">
+    <div class="row align-items-end">
+        <div class="col-md-3">
+            <label class="form-label">Фільтр за категорією</label>
+            <select name="categoryId" class="form-select" asp-items="ViewBag.CategoryId">
+                <option value="">Всі категорії</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Пошук за моделлю</label>
+            <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" class="form-control" placeholder="Введіть серію або бренд..." />
+        </div>
+        <div class="col-md-3">
+            <button type="submit" class="btn btn-primary">Шукати</button>
+            <a asp-action="Index" class="btn btn-secondary">Скинути</a>
+        </div>
+    </div>
+</form>
 
 <div class="row row-cols-1 row-cols-md-3 g-4">
-    @for (int i = 0; i < Model.Length; ++i)
+    @foreach (var item in Model)
     {
-        string Manufacturer = "";//@Model[i].Manufacturer;
-        string Series = @Model[i].Series;
-        double Price = @Model[i].Price;
-        string Description = @Model[i].Description;
-
         <div class="col">
             <div class="card h-100">
                 <img src="https://files.foxtrot.com.ua/PhotoNew/img_0_60_12258_0_1_UlIhI1.webp" class="card-img-top" alt="...">
                 <div class="card-body">
+                    <h5 class="card-title">@item.Manufacturer?.Title @item.Series</h5>
                     <p class="card-text">
-                        We sell <b>@Model[i].Manufacturer</b> <b>@Model[i].Series</b> for $<b>@Model[i].Price</b> becouse this's <b>@Model[i].Description</b>
+                        We sell <b>@item.Manufacturer?.Title</b> <b>@item.Series</b> for $<b>@item.Price</b> because this is <b>@item.Description</b>.<br />
+                        <small class="text-muted">Категорія: @item.Category?.Title</small>
                     </p>
 
+                    <div class="mb-3">
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Редагувати</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Видалити</a>
+                    </div>
+
                     <form asp-action="Buy">
-                        <input type="hidden" class="form-control" asp-for="@Manufacturer">
-                        <input type="hidden" class="form-control" asp-for="@Series">
-                        <input type="hidden" class="form-control" asp-for="@Description">
+                        <input type="hidden" name="Manufacturer.Title" value="@item.Manufacturer?.Title">
+                        <input type="hidden" name="Series" value="@item.Series">
+                        <input type="hidden" name="Description" value="@item.Description">
                         <div class="mb-3">
-                            <label class="form-label">Пропозиція нової ціни від потенційного покупця</label>
-                            <input type="text" class="form-control" asp-for="@Price">
+                            <label class="form-label">Пропозиція нової ціни</label>
+                            <input type="text" class="form-control" name="Price" value="@item.Price">
                         </div>
-                        <button type="submit" class="btn btn-primary">Купити</button>
+                        <button type="submit" class="btn btn-success">Купити</button>
                     </form>
                 </div>
             </div>
