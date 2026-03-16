@@ -1,56 +1,25 @@
 ﻿@model PhoneStore26.Models.Phone
 
-@{
-    ViewData["Title"] = "Додати телефон";
-}
+<h1>Додати телефон</h1>
 
-<h1>Додати новий телефон</h1>
+<form asp-action="Create">
+    <label>ManufacturerId:</label><br>
+    <input asp-for="ManufacturerId" /><br><br>
 
-<h4>Телефон</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <label>CategoryId:</label><br>
+    <input asp-for="CategoryId" /><br><br>
 
-            <div class="mb-3">
-                <label asp-for="ManufacturerId" class="control-label">Виробник</label>
-                <select asp-for="ManufacturerId" class="form-select" asp-items="ViewBag.ManufacturerId"></select>
-            </div>
+    <label>Series:</label><br>
+    <input asp-for="Series" /><br><br>
 
-            <div class="mb-3">
-                <label asp-for="CategoryId" class="control-label">Категорія</label>
-                <select asp-for="CategoryId" class="form-select" asp-items="ViewBag.CategoryId"></select>
-            </div>
+    <label>Price:</label><br>
+    <input asp-for="Price" /><br><br>
 
-            <div class="mb-3">
-                <label asp-for="Series" class="control-label">Серія</label>
-                <input asp-for="Series" class="form-control" />
-                <span asp-validation-for="Series" class="text-danger"></span>
-            </div>
+    <label>Description:</label><br>
+    <input asp-for="Description" /><br><br>
 
-            <div class="mb-3">
-                <label asp-for="Price" class="control-label">Ціна ($)</label>
-                <input asp-for="Price" class="form-control" type="number" step="0.01" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
+    <button type="submit">Зберегти в базу</button>
+</form>
 
-            <div class="mb-3">
-                <label asp-for="Description" class="control-label">Опис</label>
-                <textarea asp-for="Description" class="form-control" rows="3"></textarea>
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-
-            <div class="mb-3">
-                <input type="submit" value="Створити" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-secondary ms-2">Повернутися до списку</a>
-            </div>
-        </form>
-    </div>
-</div>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}
+<br>
+<a asp-action="Index">Назад до списку</a>

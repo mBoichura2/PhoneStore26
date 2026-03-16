@@ -1,4 +1,3 @@
 <Solution>
-  <Project Path="BusinessLogic/BusinessLogic.csproj" Id="6c067461-bdc2-458d-ba60-595b398eb4b1" />
   <Project Path="PhoneStore26/PhoneStore26.csproj" />
 </Solution>
