@@ -1,3 +1,5 @@
 <Solution>
-  <Project Path="PhoneStore26/PhoneStore26.csproj" />
+  <Project Path="BusinessLogic/BusinessLogic.csproj" Id="6878a81c-138a-49fc-9a66-b5507dfac8da" />
+  <Project Path="DataAccess/DataAccess.csproj" Id="ae6e6779-1990-4d65-910a-c84adb027fbe" />
+  <Project Path="PhoneStore26/UI.csproj" />
 </Solution>

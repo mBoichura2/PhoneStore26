@@ -1,6 +1,6 @@
-namespace PhoneStore26.Models
+namespace DataAccess.Entities
 {
-    public class Manufacturer
+    public class Category
     {
         public int Id { get; set; }
         public string Title { get; set; }

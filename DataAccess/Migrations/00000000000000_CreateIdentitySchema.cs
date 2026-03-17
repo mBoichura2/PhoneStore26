@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace PhoneStore26.Data.Migrations
+namespace DataAccess.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {

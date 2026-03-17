@@ -3,20 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PhoneStore26.Data;
+using DataAccess;
 
 #nullable disable
 
-namespace PhoneStore26.Data.Migrations
+namespace DataAccess.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260303084900_Seed3tables")]
-    partial class Seed3tables
+    [DbContext(typeof(PhoneStoreDbContext))]
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

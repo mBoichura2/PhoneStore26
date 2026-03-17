@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using DataAccess.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using PhoneStore26.Models;
 
-namespace PhoneStore26.Data
+namespace DataAccess
 {
-    public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext(options)
+    public class PhoneStoreDbContext(DbContextOptions<PhoneStoreDbContext> options) : IdentityDbContext(options)
     {
         public DbSet<Phone> Phones { get; set; }
         public DbSet<Category> Categories { get; set; }

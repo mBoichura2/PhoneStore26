@@ -1,8 +1,8 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using PhoneStore26.Models;
+using UI.Models;
 
-namespace PhoneStore26.Controllers
+namespace UI.Controllers
 {
     public class HomeController : Controller
     {

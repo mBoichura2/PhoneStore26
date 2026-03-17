@@ -1,4 +1,4 @@
-namespace PhoneStore26.Models
+namespace DataAccess.Entities
 {
     public class Phone
     {
