@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace PhoneStore26.Data.Migrations
+namespace DataAccess.Migrations
 {
     /// <inheritdoc />
     public partial class Add3tables : Migration

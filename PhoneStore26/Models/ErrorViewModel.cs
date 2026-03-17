@@ -1,4 +1,4 @@
-namespace PhoneStore26.Models
+namespace UI.Models
 {
     public class ErrorViewModel
     {

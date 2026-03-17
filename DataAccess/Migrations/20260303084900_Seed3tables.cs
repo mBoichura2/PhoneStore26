@@ -4,7 +4,7 @@
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace PhoneStore26.Data.Migrations
+namespace DataAccess.Migrations
 {
     /// <inheritdoc />
     public partial class Seed3tables : Migration
