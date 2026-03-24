@@ -12,12 +12,36 @@ builder.Services.AddDbContext<PhoneStoreDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<PhoneStoreDbContext>();
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped(typeof(PhoneService));
 
 var app = builder.Build();
+
+
+
+
+using (var scope = app.Services.CreateAsyncScope())
+{
+    var provider = scope.ServiceProvider;
+
+    var roleManager = provider.GetRequiredService<RoleManager<IdentityRole>>();
+    IdentityRole role1 = new IdentityRole("Admin");
+    await roleManager.CreateAsync(role1);
+    IdentityRole role2 = new IdentityRole("Customer");//Клієнт
+    await roleManager.CreateAsync(role2);
+
+    var userManager = provider.GetRequiredService<UserManager<IdentityUser>>();
+    var user1 = await userManager.FindByNameAsync("a@b.c");
+    await userManager.AddToRoleAsync(user1, "Admin");//role1.Name
+    var user2 = await userManager.FindByNameAsync("mish@mish.mish");
+    await userManager.AddToRoleAsync(user2, "Customer");//role2.Name
+}
+
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
