@@ -1,6 +1,7 @@
 using BusinessLogic.Services;
 using DataAccess;
 using DataAccess.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace UI.Controllers
@@ -20,6 +21,7 @@ namespace UI.Controllers
             return View(phones);
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create()
         {
             return View();
@@ -32,6 +34,7 @@ namespace UI.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id)
         {
             var phone = await _phoneService.GetPhone(id);
@@ -45,6 +48,7 @@ namespace UI.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var phone = await _phoneService.GetPhone(id);
@@ -57,7 +61,8 @@ namespace UI.Controllers
             await _phoneService.Delete(id);
             return RedirectToAction("Index");
         }
-
+        
+        [Authorize]
         public IActionResult Buy(Phone phone)
         {
             return View(phone);
