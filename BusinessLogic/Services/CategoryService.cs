@@ -1,5 +1,6 @@
 using DataAccess;
 using DataAccess.Entities;
+using Microsoft.EntityFrameworkCore;
 using System.Numerics;
 
 namespace BusinessLogic.Services
@@ -13,11 +14,11 @@ namespace BusinessLogic.Services
             _context = context;
         }
 
-        public List<Category> GetAll(string search)
+        public async Task<List<Category>> GetAll(string search)
         {
-            var categories = _context.Categories.ToList();
-            _context.Categories.ToList();
-            _context.Manufacturer.ToList();
+            var categories = await _context.Categories.ToListAsync();
+            await _context.Categories.ToListAsync();
+            await _context.Manufacturer.ToListAsync();
 
             //if (!string.IsNullOrEmpty(search))
             //{
@@ -27,29 +28,29 @@ namespace BusinessLogic.Services
             return categories;
         }
 
-        public Category GetCategory(int id)
+        public async Task<Category> GetCategory(int id)
         {
-            var category = _context.Categories.Find(id);
+            var category = await _context.Categories.FindAsync(id);
             return category;
         }
 
-        public void Create(Category category)
+        public async Task Create(Category category)
         {
-            _context.Categories.Add(category);
-            _context.SaveChanges();
+            await _context.Categories.AddAsync(category);
+            await _context.SaveChangesAsync();
         }
 
-        public void Update(Category category)
+        public async Task Update(Category category)
         {
             _context.Categories.Update(category);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var category = _context.Categories.Find(id);
+            var category = await _context.Categories.FindAsync(id);
             _context.Categories.Remove(category);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }
