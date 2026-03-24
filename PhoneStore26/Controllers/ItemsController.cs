@@ -14,47 +14,47 @@ namespace UI.Controllers
             _phoneService = phoneService;
         }
 
-        public IActionResult Index(string search)
+        public async Task<IActionResult> Index(string search)
         {
-            var phones = _phoneService.GetAll(search);
+            var phones = await _phoneService.GetAll(search);
             return View(phones);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Create(Phone phone)
+        public async Task<IActionResult> Create(Phone phone)
         {
-            _phoneService.Create(phone);
+            await _phoneService.Create(phone);
             return RedirectToAction("Index");
         }
 
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var phone = _phoneService.GetPhone(id);
+            var phone = await _phoneService.GetPhone(id);
             return View(phone);
         }
 
         [HttpPost]
-        public IActionResult Edit(Phone phone)
+        public async Task<IActionResult> Edit(Phone phone)
         {
-            _phoneService.Update(phone);
+            await _phoneService.Update(phone);
             return RedirectToAction("Index");
         }
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var phone = _phoneService.GetPhone(id);
+            var phone = await _phoneService.GetPhone(id);
             return View(phone);
         }
 
         [HttpPost, ActionName("Delete")]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            _phoneService.Delete(id);
+            await _phoneService.Delete(id);
             return RedirectToAction("Index");
         }
 

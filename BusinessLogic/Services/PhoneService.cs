@@ -1,5 +1,6 @@
 using DataAccess;
 using DataAccess.Entities;
+using Microsoft.EntityFrameworkCore;
 using System.Numerics;
 
 //CRUD
@@ -15,47 +16,50 @@ namespace BusinessLogic.Services
         }
 
         //R
-        public List<Phone> GetAll(string search)
+        public async Task<List<Phone>> GetAll(string search)
         {
-            var phones = _context.Phones.ToList();
-            _context.Categories.ToList();
-            _context.Manufacturer.ToList();
+            var phones = await _context.Phones.ToListAsync();
+            await _context.Categories.ToListAsync();
+            await _context.Manufacturer.ToListAsync();
 
-            if (!string.IsNullOrEmpty(search))
-            {
-                phones = phones.Where(p => p.Series.Contains(search)).ToList();
-            }
+            //await Task.Run(() =>
+            //{
+                if (!string.IsNullOrEmpty(search))
+                {
+                    phones = phones.Where(p => p.Series.Contains(search)).ToList();
+                }
+            //}
 
             return phones;
         }
 
         //R
-        public Phone GetPhone(int id)
+        public async Task<Phone> GetPhone(int id)
         {
-            var phone = _context.Phones.Find(id);
+            var phone = await _context.Phones.FindAsync(id);
             return phone;
         }
 
         //C
-        public void Create(Phone phone)
+        public async Task Create(Phone phone)
         {
-            _context.Phones.Add(phone);
-            _context.SaveChanges();
+            await _context.Phones.AddAsync(phone);
+            await _context.SaveChangesAsync();
         }
 
         //U
-        public void Update(Phone phone)
+        public async Task Update(Phone phone)
         {
             _context.Phones.Update(phone);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         //D
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var phone = _context.Phones.Find(id);
+            var phone = await _context.Phones.FindAsync(id);
             _context.Phones.Remove(phone);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }
